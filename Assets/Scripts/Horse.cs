@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horse : Animal
+public class Horse : Animal // INHERITANCE
 {
-    protected override float MovementSpeed { get => m_MovementSpeed; set => m_MovementSpeed = value; }
-    protected override float RotationSpeed { get => m_RotationSpeed; set => m_RotationSpeed = value; }
+    protected override float MovementSpeed { get => m_MovementSpeed; set => m_MovementSpeed = value; } // ENCAPSULATION
+    protected override float RotationSpeed { get => m_RotationSpeed; set => m_RotationSpeed = value; } // ENCAPSULATION
 
-    [SerializeField] private float m_MovementSpeed;
-    [SerializeField] private float m_RotationSpeed;
+    [SerializeField] private float m_MovementSpeed; // ENCAPSULATION
+    [SerializeField] private float m_RotationSpeed; // ENCAPSULATION
 
     void Update()
     {
@@ -20,7 +20,7 @@ public class Horse : Animal
         }
     }
 
-    protected override void Move()
+    protected override void Move() // POLYMORPHISM
     {
         float speedBoost = 6f;
         float horizontalMovement = Input.GetAxis("Horizontal");

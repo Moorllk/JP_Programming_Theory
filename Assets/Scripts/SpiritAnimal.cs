@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpiritAnimal : Animal
+public class SpiritAnimal : Animal // INHERITANCE
 {
-    protected override float MovementSpeed { get => m_MovementSpeed; set => m_MovementSpeed = value; }
+    protected override float MovementSpeed { get => m_MovementSpeed; set => m_MovementSpeed = value; } // ENCAPSULATION
 
-    [SerializeField] private float m_MovementSpeed;
+    [SerializeField] private float m_MovementSpeed; // ENCAPSULATION
     private MeshRenderer meshRenderer;
     private bool exitAvailable = false;
     public Animal currentAnimal;
@@ -63,7 +63,7 @@ public class SpiritAnimal : Animal
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other) // POLYMORPHISM
     {
         if (other.gameObject.CompareTag("Animal"))
         {
@@ -72,7 +72,7 @@ public class SpiritAnimal : Animal
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnTriggerExit(Collider other) // POLYMORPHISM
     {
         currentAnimal = other.gameObject.CompareTag("Animal") && !exitAvailable ? null : currentAnimal;
     }

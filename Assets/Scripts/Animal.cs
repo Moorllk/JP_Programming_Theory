@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Animal : MonoBehaviour
 {
-    protected virtual float MovementSpeed { get; set; }
-    protected virtual float RotationSpeed { get; set; }
-    protected virtual float Satiety { get; set; }
+    protected virtual float MovementSpeed { get; set; } // ENCAPSULATION
+    protected virtual float RotationSpeed { get; set; } // ENCAPSULATION
+    protected virtual float Satiety { get; set; } // not needed in the project
 
     protected Vector3 movement;
     private Collider food;
 
-    protected virtual void Move()
+    protected virtual void Move() // POLYMORPHISM, ABSTRACTION
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
@@ -27,7 +27,7 @@ public class Animal : MonoBehaviour
         transform.Translate(movement * MovementSpeed * Time.deltaTime, Space.World);
     }
 
-    protected void Eat()
+    protected void Eat() // ABSTRACTION
     {
         if (food != null)
         {
@@ -37,7 +37,7 @@ public class Animal : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other) // POLYMORPHISM
     {
         if (other.gameObject.CompareTag("Food"))
         {
@@ -46,7 +46,7 @@ public class Animal : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other) // POLYMORPHISM
     {
         if (other.gameObject.CompareTag("Food"))
         {
