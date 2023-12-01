@@ -8,7 +8,6 @@ public class Rabbit : Animal
     protected override float RotationSpeed { get => m_RotationSpeed; set => m_RotationSpeed = value; }
 
     [SerializeField] private Transform holeExit;
-    private Rigidbody m_Rigidbody;
     [SerializeField] private float m_MovementSpeed;
     [SerializeField] private float m_RotationSpeed;
     private bool canClimb = false;
@@ -26,28 +25,18 @@ public class Rabbit : Animal
 
     private void IntoTheHole()
     {
-        if(canClimb)
-        {
-            Debug.Log("Rabbit Teleport");
-            transform.position = holeExit.position;
-        }
+        transform.position = canClimb ? holeExit.position : transform.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("HoleEnter"))
-        {
-            Debug.Log("Can Climb");
-            canClimb = true;
-        }
+        base.OnTriggerEnter(other);
+        canClimb = other.gameObject.CompareTag("HoleEnter") ? true : false;
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("HoleEnter"))
-        {
-            Debug.Log("Can't Climb");
-            canClimb = false;
-        }
+        base.OnTriggerEnter(other);
+        canClimb = other.gameObject.CompareTag("HoleEnter") ? false : true;
     }
 }

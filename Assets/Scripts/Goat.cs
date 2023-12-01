@@ -43,19 +43,11 @@ public class Goat : Animal
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Ground Collision");
-            isGround = true;
-        }
+        isGround = collision.gameObject.CompareTag("Ground") ? true : false;
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Ground Not Collision");
-            isGround = false;
-        }
+        isGround = collision.gameObject.CompareTag("Ground") ? false : true;
     }
 }

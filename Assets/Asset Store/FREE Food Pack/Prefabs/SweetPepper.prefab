@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4000010883411580}
   - component: {fileID: 33000011708222682}
   - component: {fileID: 23000011681478350}
-  - component: {fileID: 5483325955110555147}
+  - component: {fileID: 2602134700879421269}
   m_Layer: 0
   m_Name: SweetPepper
   m_TagString: Food
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5483325955110555147
+--- !u!65 &2602134700879421269
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26194692, y: 0.29701608, z: 0.31187424}
-  m_Center: {x: -0.009909746, y: 0.023171904, z: -0.006868321}
+  m_Size: {x: 0.30237368, y: 0.2519064, z: 0.36868653}
+  m_Center: {x: -0.0039812624, y: 0.048926145, z: -0.0027161837}

@@ -8,10 +8,8 @@ public class SpiritAnimal : Animal
 
     [SerializeField] private float m_MovementSpeed;
     private MeshRenderer meshRenderer;
-    public Animal currentAnimal;
-    private bool up = true;
-    private bool movedIn = false;
     private bool exitAvailable = false;
+    public Animal currentAnimal;
 
     void Start()
     {
@@ -20,7 +18,7 @@ public class SpiritAnimal : Animal
 
     void Update()
     {
-        if (!movedIn)
+        if (!exitAvailable)
         {
             Move();
         }
@@ -40,7 +38,7 @@ public class SpiritAnimal : Animal
 
     private void LateUpdate()
     {
-        if (!movedIn)
+        if (!exitAvailable)
         {
             Levitation();
         }
@@ -48,23 +46,12 @@ public class SpiritAnimal : Animal
 
     private void TakingControl()
     {
-        if (exitAvailable)
-        {
-            Debug.Log("Exit from " + currentAnimal.GetType().Name);
-            currentAnimal.enabled = false;
-            meshRenderer.enabled = true;
-            movedIn = false;
-            exitAvailable = false;
-            currentAnimal = null;
-        }
-        else
-        {
-            Debug.Log("Switching to " + currentAnimal.GetType().Name);
-            currentAnimal.enabled = true;
-            meshRenderer.enabled = false;
-            movedIn = true;
-            exitAvailable = true;
-        }
+        string text = !exitAvailable ? "Exit from " + currentAnimal.GetType().Name : "Switching to " + currentAnimal.GetType().Name;
+        currentAnimal.enabled = !exitAvailable ? true : false;
+        meshRenderer.enabled = !exitAvailable ? false : true;
+        exitAvailable = !exitAvailable? true : false;
+
+        Debug.Log(text);
     }
 
     private void Levitation()
@@ -72,23 +59,8 @@ public class SpiritAnimal : Animal
         float levitationSpeed = 0.09f;
         float topY = 0.6f;
         float downY = 0.4f;
-
-        if (up)
-        {
-            transform.Translate(Vector3.up * levitationSpeed * Time.deltaTime);
-            if (transform.position.y > topY)
-            {
-                up = false;
-            }
-        }
-        else
-        {
-            transform.Translate(Vector3.down * levitationSpeed * Time.deltaTime);
-            if (transform.position.y < downY)
-            {
-                up = true;
-            }
-        }
+        float newY = Mathf.PingPong(Time.time * levitationSpeed, topY - downY) + downY;
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -96,10 +68,12 @@ public class SpiritAnimal : Animal
         if (other.gameObject.CompareTag("Animal"))
         {
             Animal animal = other.GetComponent<Animal>();
-            if (animal != null)
-            {
-                currentAnimal = animal;
-            }
+            currentAnimal = animal != null ? animal : null;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        currentAnimal = other.gameObject.CompareTag("Animal") && !exitAvailable ? null : currentAnimal;
     }
 }

@@ -9,12 +9,6 @@ public class Horse : Animal
 
     [SerializeField] private float m_MovementSpeed;
     [SerializeField] private float m_RotationSpeed;
-    private float defaultSpeed;
-
-    void Start()
-    {
-        defaultSpeed = m_MovementSpeed;
-    }
 
     void Update()
     {
@@ -34,15 +28,7 @@ public class Horse : Animal
 
         Vector3 movement = new Vector3(horizontalMovement, 0.0f, verticalMovement);
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Debug.Log("Speed Bost");
-            m_MovementSpeed = speedBoost;
-        }
-        else
-        {
-            m_MovementSpeed = defaultSpeed;
-        }
+        movement *= Input.GetKey(KeyCode.LeftShift) ? speedBoost : MovementSpeed;
 
         if (movement != Vector3.zero)
         {
@@ -50,6 +36,6 @@ public class Horse : Animal
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, RotationSpeed * Time.deltaTime);
         }
 
-        transform.Translate(movement * MovementSpeed * Time.deltaTime, Space.World);
+        transform.Translate(movement * Time.deltaTime, Space.World);
     }
 }

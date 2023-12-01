@@ -6,11 +6,10 @@ public class Animal : MonoBehaviour
 {
     protected virtual float MovementSpeed { get; set; }
     protected virtual float RotationSpeed { get; set; }
-    protected virtual float Satiety {  get; set; }
+    protected virtual float Satiety { get; set; }
 
     protected Vector3 movement;
     private Collider food;
-    private bool canEat = false;
 
     protected virtual void Move()
     {
@@ -30,7 +29,7 @@ public class Animal : MonoBehaviour
 
     protected void Eat()
     {
-        if(canEat && food != null)
+        if (food != null)
         {
             Debug.Log("Feeding");
             food.gameObject.SetActive(false);
@@ -38,23 +37,21 @@ public class Animal : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Food"))
         {
             Debug.Log("Can Eat");
-            food = other.gameObject.GetComponent<Collider>();
-            canEat = true;
+            food = other;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Food"))
         {
             Debug.Log("Can't Eat");
             food = null;
-            canEat = false;
         }
     }
 }
