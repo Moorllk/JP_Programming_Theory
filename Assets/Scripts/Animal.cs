@@ -5,19 +5,29 @@ using UnityEngine;
 public class Animal : MonoBehaviour
 {
     protected virtual float MovementSpeed { get; set; }
+    protected virtual float RotationSpeed { get; set; }
     protected virtual float Satiety {  get; set; }
 
+    protected Vector3 movement;
     private Collider food;
     private bool canEat = false;
 
-    protected void Move()
+    protected virtual void Move()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(verticalMovement, 0.0f, -horizontalMovement);
+        Vector3 movement = new Vector3(horizontalMovement, 0.0f, verticalMovement);
 
-        transform.Translate(movement * MovementSpeed * Time.deltaTime);
+        Debug.Log(movement);
+
+        if (movement != Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(new Vector3(-verticalMovement, 0.0f, horizontalMovement));
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, RotationSpeed * Time.deltaTime);
+        }
+
+        transform.Translate(movement * MovementSpeed * Time.deltaTime, Space.World);
     }
 
     protected void Eat()
