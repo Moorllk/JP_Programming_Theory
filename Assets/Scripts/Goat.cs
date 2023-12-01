@@ -21,6 +21,11 @@ public class Goat : Animal
     void Update()
     {
         Move();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Eat();
+        }
     }
 
     private void FixedUpdate()

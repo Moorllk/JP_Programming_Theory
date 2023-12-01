@@ -19,8 +19,6 @@ public class Animal : MonoBehaviour
 
         Vector3 movement = new Vector3(horizontalMovement, 0.0f, verticalMovement);
 
-        Debug.Log(movement);
-
         if (movement != Vector3.zero)
         {
             Quaternion newRotation = Quaternion.LookRotation(new Vector3(-verticalMovement, 0.0f, horizontalMovement));
@@ -32,26 +30,27 @@ public class Animal : MonoBehaviour
 
     protected void Eat()
     {
-        if(canEat && Input.GetKeyDown(KeyCode.F) && food != null)
+        if(canEat && food != null)
         {
+            Debug.Log("Feeding");
             food.gameObject.SetActive(false);
             Satiety++;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Food"))
+        if (other.gameObject.CompareTag("Food"))
         {
             Debug.Log("Can Eat");
-            food = collision.gameObject.GetComponent<Collider>();
+            food = other.gameObject.GetComponent<Collider>();
             canEat = true;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Food"))
+        if (other.gameObject.CompareTag("Food"))
         {
             Debug.Log("Can't Eat");
             food = null;

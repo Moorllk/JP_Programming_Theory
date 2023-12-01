@@ -7,6 +7,10 @@ TagManager:
   - Gate
   - Food
   - Ground
+  - HoleEnter
+  - Animal
+  - Goat
+  - SpiritExit
   layers:
   - Default
   - TransparentFX
